@@ -1,0 +1,370 @@
+3/2/2026
+DJANGO LEARN :
+
+-> Python Web Framework with inbuilt ORM support
+-> MVT Architecture
+
+M -> Model -> A table in the Database (Raw Materials)
+V -> View  -> Handles Request , Performs Logic (Cooking)
+T -> Template -> often its a HTML File, the data we present to user (Menu)
+
+urls.py --> Redirects the Request , acts like routes
+asgi.py --> Asynchronous Server Gateway interface
+            (1) Many request process simultaneously
+             ex: youtube live chat many things happening at same Time
+
+wsgi.py --> Web Server Gateway Interface
+            (1) One process excetues then go to other
+             ex: text message req(->) and resp(<-)
+
+==========================================================================================================================
+
+
+Why Virtual Env(venv) is needed?
+
+if we r working in project A and project B
+
+--> Project A --> running on Django 2.0
+--> Project B --> running on Django 5.0
+
+if we install Django 5.0 globally Django 2.0 either overwrites/ deleted
+
+if we run Project A it crashes
+
+venv -> creates a separate folder for Project A and Project B
+        invisible to each other helps project run without crashing
+
+Create and activate venv
+
+---
+|  python3 -m venv myenv     |
+|                            |
+| source venv/bin/activate
+|
+|                            |
+---
+
+==========================================================================================================================
+
+
+PIP --> Package Manager
+    --> To install Django we need pip
+
+---
+| python -m pip install Django |
+---
+
+python --> tells the computer who is doing
+-m     --> module flag, look inside your own library for specific module
+pip    --> like app store in python, preffered installer program
+install--> what action we need to do
+Django --> name of the package we want
+
+
+==========================================================================================================================
+
+
+check Django's version
+
+---
+|  django-admin --version |
+---
+
+
+To start a project :
+
+---
+|django-admin startproject my-project|
+---
+
+
+To Run a Project:
+
+---
+| python manage.py runserver |
+---
+
+Creating an APP:
+
+--> A project can hve many app
+--> 1 app = 1 responsibility(contact page, home page)
+--> contains logic
+--> Reusable
+
+
+---
+| python manage.py startapp "app-name"|
+---
+==========================================================================================================================
+
+why we use (request) in param :
+In Django, you CANNOT return a response unless your function accepts request as a parameter.
+
+
+
+Adding Templates :
+~~~~~~~~~~~~~~~~
+
+
+
+
+
+Template : A HTML Page
+
+
+
+"app folder"
+
+\&nbsp;    |
+
+\&nbsp;    ---------> Templates
+
+\&nbsp;                   |
+
+\&nbsp;                   ---------->"template\\\_name.html"
+
+
+
+
+
+---> after wrote HTML Code in .html file
+
+---> Modify views import template
+
+---> get template
+
+---> render template
+
+
+
+---> go to settings.py in INSTALLED\\\_APPS=\\\[]
+
+---> add "app\\\_name" at the bottom ,that our template is inside 
+
+---> migrate - python manage.py migrate
+
+--->  run server - python manage.py runserver
+
+
+
+
+
+MODELS:
+
+
+
+---> a table in Database
+
+---> models.py
+
+---> class name(table name) should be same as app name, and add some fields
+
+---> make migration  - python manage.py makemigrations users
+
+---> migrate - python manage.py migrate
+
+---> view SQL - python manage.py sqlmigrate users 0001
+
+
+
+
+
+Install Rest FrameWork
+
+
+
+---> pip install djangorestframework
+
+
+
+
+
+
+
+3/2/2026
+
+
+
+(1)Understood the Django Basics
+
+(2)Completed Simple CRUD operations in Django 
+
+(3)Working on role based access in Django Project
+
+
+
+
+
+
+
+
+
+4/2/2026
+
+
+
+(1) Error: 
+
+   I have my .html file under templates folder when i run that it throws (TEMPLATE DOSENT EXSIST ERROR), 
+
+   ==> raise TemplateDoesNotExist(", ".join(template_name\\\_list)
+
+django.template.exceptions.TemplateDoesNotExist: registration/login.html
+
+
+
+Tempalate dosenot exsist error came 
+
+
+
+then i add  \*\*path('login/', auth\_view.LoginView.as\\\_view(template\\\_name='login.html'), name='login'),\*\*
+
+inside .as\\\_view i added (template\\\_name='myhtmlpageName')
+
+
+
+-> save
+
+-> runserver
+
+_. then its working
+
+
+
+
+
+(1) Created  a documentation for Better auth 
+
+(2) Implemented the foundational step in my rbac Django Project
+
+(3) Learnt how Django Orm actually works
+
+
+
+5/2/2026
+
+(1) How to Connect DB in our Django Project
+
+pip install mysqlclient
+pip show client
+3. go to settings.py and change
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',,       <----- this line
+        'NAME': 'django_rbac_db',                    <----- this line
+        'USER': 'root',
+        'PASSWORD': 'your_mysql_password',           <----- this line
+        'HOST': 'localhost',                         <----- this line
+        'PORT': '3306',                              <----- this line
+    }
+}
+
+
+4. python manage.py migrate
+5.Done
+
+(2) HOW TO ADD DATAS IN DATABASE?
+
+
+(1) python manage.py shell
+
+(2) create roles :
+    
+from django.contrib.auth.models import Group
+
+roles=["admin","manager","user"]
+
+for role in roles:
+    Group.objects.get_or_create(name=role) 
+
+(3) Assign username and password for that roles:
+
+from django.contrib.auth.models import User
+
+admin_user = User.objects.create_user(username="admin",password="123")  // Admin
+manager = User.objects.create_user(username="manager", password="123") // Manager
+normal_user = User.objects.create_user(username="user",password="123")   // userUser.obje
+
+admin_group = Group.objects.get(name="admin")
+manager_group = Group.objects.get(name = "manager")
+user_group = Group.objects.get(name="user")
+
+(4) Add users to respective groups
+
+admin_user.groups.add(admin_group)
+manager.groups.add(manager_group)
+normal_user.groups.add(user_group)
+  
+(5) Verify
+admin_user.groups.all()
+manager.groups.all()
+normal_user.grouups.all()
+
+1. Done a Simple Role based routing in python 
+2. Learnt how to add role based datas that stored in SQL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
