@@ -1,0 +1,34 @@
+<h1>Admin Dashboard</h1>
+
+<p>
+Logged in as: <b>{{ request.user.username }}</b><br>  
+Role: <b> {{ request.user.Role}}</b>
+</p>
+
+<hr>
+
+<h2>Managers</h2>
+<a href="/create-user/manager/">Create Manager</a>
+<ul>
+{% for m in managers %}
+  <li>
+    {{ m.username }}
+    <a href="/edit-user/{{ m.id }}/">Edit</a>
+    <a href="/delete-user/{{ m.id }}/">Delete</a>
+  </li>
+{% endfor %}
+</ul>
+
+<h2>Users</h2>
+<a href="/create-user/user/">Create User</a>
+<ul>
+{% for u in users %}
+  <li>
+    {{ u.username }}
+    <a href="/edit-user/{{ u.id }}/">Edit</a>
+    <a href="/delete-user/{{ u.id }}/">Delete</a>
+  </li>
+{% endfor %}
+</ul>
+
+<a href="/logout/">Logout</a>

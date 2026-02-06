@@ -1,0 +1,10 @@
+<h1>User Dashboard</h1>
+
+<p>Welcome {{ request.user.username }}</p>
+<p>Role:
+    {% for group in request.user.groups.all %}
+        {{ group.name }}
+    {% endfor %}
+</p>
+
+<a href="/logout/">Logout</a>
